@@ -146,3 +146,82 @@ class Locadora:
     def listarItens(self):
         return self.__itens
 ```
+# 📚 Explicação das Classes
+
+## class Item
+Classe base para todos os itens da locadora (filmes e jogos).
+
+**Atributos**
+- `__id` → código único do item
+- `__titulo` → nome do item
+- `__disponivel` → indica se o item está disponível (True/False)
+
+**Métodos**
+- `alugar()` → marca o item como não disponível
+- `devolver()` → marca o item como disponível
+- `getId()` → retorna o id do item
+- `getTitulo()` → retorna o título do item
+- `isDisponivel()` → retorna se o item está disponível
+- `setTitulo(titulo)` → altera o título do item
+
+---
+
+## class Filme(Item)
+Classe filha de Item, específica para filmes.
+
+**Atributos**
+- `__genero` → gênero do filme
+- `__duracao` → duração do filme em minutos
+
+**Métodos**
+- `getGenero()` → retorna o gênero do filme
+- `getDuracao()` → retorna a duração
+- `setGenero(genero)` → altera o gênero
+---
+
+## class Jogo(Item)
+Classe filha de Item, específica para jogos.
+
+**Atributos**
+- `__plataforma` → plataforma do jogo (ex: PC, PS5)
+- `__faixaEtaria` → faixa etária recomendada
+
+**Métodos**
+- `getPlataforma()` → retorna a plataforma
+- `getFaixaEtaria()` → retorna a faixa etária
+---
+
+## class Cliente
+Representa um cliente da locadora.
+
+**Atributos**
+- `__nome` → nome do cliente
+- `__cpf` → CPF do cliente
+- `__itensLocados` → lista de itens alugados pelo cliente
+
+**Métodos**
+- `getNome()` → retorna o nome
+- `getCpf()` → retorna o CPF
+- `getItensLocados()` → retorna a lista de itens locados
+- `locar(item)` → aluga um item e adiciona à lista de locados
+- `devolver(item)` → devolve um item e remove da lista de locados
+---
+
+## class Locadora
+Gerencia todos os clientes e itens da locadora.
+
+**Atributos**
+- `__clientes` → lista de todos os clientes cadastrados
+- `__itens` → lista de todos os itens cadastrados
+
+**Métodos**
+- `cadastrarCliente(cliente)` → adiciona um cliente à lista
+- `cadastrarItem(item)` → adiciona um item à lista
+- `listarClientes()` → retorna todos os clientes
+- `listarItens()` → retorna todos os itens
+---
+
+# Código funcoes.py
+```python
+****
+```
