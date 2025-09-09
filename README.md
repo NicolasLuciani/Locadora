@@ -410,7 +410,33 @@ def listar():
 ---
 # App.py
 ```python
-****
+from funcoes import *
+
+while True:
+    try:
+        os.system("cls" if os.name == "nt" else "clear")
+        print("\n=== Locadora ===")
+        print("1 - Cadastrar Cliente")
+        print("2 - Cadastrar Filme ou Jogo")
+        print("3 - Listar")
+        print("0 - Sair")
+        escolha = int(input("---> "))
+
+        match escolha:
+            case 1:
+                cadastrar_cliente()
+            case 2:
+                cadastrar_filme_jogo()
+            case 3:
+                listar()
+            case 0:
+                break
+            case _:
+                print("Opção inválida!")
+
+        input("\nPressione Enter para continuar...")
+
+    except Exception as e:
+        print(f"Ocorreu um erro inesperado: {e}")
 ```
-### Aqui temos o menu que está com as funções feitas em **funcoes.py** e que atribuiram de **classes.py**
-### Utilizando ao invez de if e else, march case, e englobado por try except, melhorando assim, a validação
+#### O menu utiliza as funções definidas em **funcoes.py**, que por sua vez manipulam os objetos das classes definidas em **classes.py**. Em vez de usar estruturas tradicionais `if/else`, utilizamos `match/case`, tudo dentro de um bloco `try/except` para melhorar a validação e tratar possíveis erros de entrada.
