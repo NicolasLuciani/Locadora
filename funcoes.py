@@ -1,7 +1,7 @@
 from classes import *
 import os
 
-Locadora = Locadora()
+locadora = locadora()
 
 def cadastrar_cliente():
     print("Vamos cadastrar o cliente!")
@@ -19,7 +19,7 @@ def cadastrar_cliente():
             ValueError("CPF possui exatamente 11 números!")
 
         cliente = Cliente(nome_cliente, cpf)
-        Locadora.cadastrarCliente(cliente)
+        locadora.cadastrarCliente(cliente)
         print("Cadastro realizado com sucesso!")
     
     except Exception as e:
@@ -39,19 +39,11 @@ def cadstrar_filme():
             ValueError("Digite algo para a validação")
 
         print("Duração do filme:")
-        h = input("Quantas horas possui o filme\n--->")
-        if h == "":
-            ValueError("Digite algo para a validação")
-        h = int(h)
+        duracao = input("Digite a duração do filme (ex: 2h23m)\n--->")
 
-        m = input("Quantos minutos possui o filme\n--->")
-        if m == "":
-            ValueError("Digite algo para a validação")
-        m = int(m)
-
-        print(f"|Título: {titulo}|Gênero: {genero}|Duração:{h}/{m}")
-        filme = Filme(titulo, genero, h, m)
-        Locadora.cadastrarItens(filme)
+        print(f"|Título: {titulo}|Gênero: {genero}|Duração:{duracao}")
+        filme = Filme(titulo, genero, duracao)
+        locadora.cadastrarItens(filme)
 
     except Exception as e:
         print(f"Ocorreu um erro ineperado {e}")
@@ -74,7 +66,7 @@ def cadstrar_jogo():
             ValueError("Digite algo para a validação")
 
         jogo = Jogo(titulo, plataforma, fixaetaria)
-        Locadora.cadastrarItens(jogo)
+        locadora.cadastrarItens(jogo)
     
     except Exception as e:
         print(f"Ocorreu um erro ineperado {e}")
@@ -107,28 +99,28 @@ def cadastrar_filme_jogo():
 def listar_clientes():
     print("--- CLIENTES ---")
     print("")
-    if not Locadora.listarClientes:
+    if not locadora.listarClientes:
         print("Nenhum cliente cadastrado")
 
-    for id, cliente in enumerate(Locadora.cliente, start=1):
+    for id, cliente in enumerate(locadora.cliente, start=1):
         print(f"{id} - Nome: {cliente.nome} | CPF: {cliente.cpf}")
 
 def listar_filme():
     print("--- FILMES ---")
     print("")
-    if not Locadora.cadastrarItens:
+    if not locadora.cadastrarItens:
         print("Nenhum filme cadastrado")
     
-    for id, filme in enumerate(Locadora.filme, start=1):
+    for id, filme in enumerate(locadora.filme, start=1):
         print(f"{id} - Nome {filme.nome} | {filme.genero}")
 
 def listar_jogo():
     print("--- JOGOS ---")
     print("")
-    if not Locadora.cadastrarItens:
+    if not locadora.cadastrarItens:
         print("Nenhum jogo cadastrado")
     
-    for id, jogo in enumerate(Locadora.filme, start=1):
+    for id, jogo in enumerate(locadora.filme, start=1):
         print(f"{id} - Nome {jogo.nome} | {jogo.genero}")
 
 def listar():

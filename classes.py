@@ -33,8 +33,6 @@ class Filme(Iten):
 
     def __init__(self, id, titulo, genero, duracao):
         super().__init__(id, titulo)
-        self.__id = id
-        self.__titulo = titulo
         self.__genero = genero
         self.__duracao = duracao
 
@@ -103,7 +101,7 @@ class Cliente:
             self.__disponibilidade = True
 #------------------------------ class locadora ------------------------------------------------
 
-class Locadora:
+class locadora:
     def __init__(self):
         self.__cliente = []
         self.__itens = []
