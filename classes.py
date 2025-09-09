@@ -85,16 +85,17 @@ class Cliente:
     
     def getItensLocados(self):
         return self.__itenslocados
+    
+    def setNome(self, nome):
+        self.__nome = nome
 
 #------------------------------ métodos ------------------------------------------------
-    def locar(self, disponibilidade):
-        self.__disponibilidade == disponibilidade
+    def locar(self):
 
         if self.__disponibilidade:
             self.__disponibilidade = False
         
-    def devolver(self, disponibilidade):
-        self.__disponibilidade == disponibilidade
+    def devolver(self):
 
         if not self.__disponibilidade:
             self.__disponibilidade = True
