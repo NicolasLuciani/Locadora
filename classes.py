@@ -32,6 +32,7 @@ class Filme(Iten):
         return self.__duracao
 
     def __init__(self, id, titulo, genero, duracao):
+        super().__init__(id, titulo)
         self.__id = id
         self.__titulo = titulo
         self.__genero = genero
@@ -59,7 +60,8 @@ class Filme(Iten):
 
 #------------------------------ class jogo -------------------------------------------------
 class Jogo(Iten):
-    def __init__(self, plataforma, faixaEtaria):
+    def __init__(self, id, titulo, plataforma, faixaEtaria):
+        super().__init__(id, titulo,)
         self.__plataforma = plataforma
         self.__faixaEtaria = faixaEtaria
 
