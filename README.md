@@ -223,5 +223,194 @@ Gerencia todos os clientes e itens da locadora.
 
 # Código funcoes.py
 ```python
+from classes import *
+
+locadora = Locadora()
+
+
+def cadastrar_cliente():
+    try:
+        print("Cadastro de Cliente")
+        nome = input("Nome: ")
+        cpf = input("CPF (11 dígitos): ")
+
+        if len(cpf) != 11:
+            print("CPF inválido!")
+            return
+
+        cliente = Cliente(nome, cpf)
+        locadora.cadastrarCliente(cliente)
+        print(f"Cliente {nome} cadastrado com sucesso!")
+
+    except Exception as e:
+        print(f"Ocorreu um erro inesperado: {e}")
+
+
+def cadastrar_filme():
+    try:
+        print("Cadastro de Filme")
+        id = len(locadora.listarItens()) + 1
+        titulo = input("Título: ")
+        genero = input("Gênero: ")
+        duracao = int(input("Duração (minutos): "))
+
+        filme = Filme(id, titulo, genero, duracao)
+        locadora.cadastrarItem(filme)
+        print(f"Filme {titulo} cadastrado!")
+
+    except Exception as e:
+        print(f"Ocorreu um erro inesperado: {e}")
+
+
+def cadastrar_jogo():
+    try:
+        print("Cadastro de Jogo")
+        id = len(locadora.listarItens()) + 1
+        titulo = input("Título: ")
+        plataforma = input("Plataforma: ")
+        faixa = int(input("Faixa etária: "))
+
+        jogo = Jogo(id, titulo, plataforma, faixa)
+        locadora.cadastrarItem(jogo)
+        print(f"Jogo {titulo} cadastrado!")
+
+    except Exception as e:
+        print(f"Ocorreu um erro inesperado: {e}")
+
+
+def cadastrar_filme_jogo():
+    while True:
+        try:
+            print("1 - Cadastrar Filme")
+            print("2 - Cadastrar Jogo")
+            print("0 - Voltar")
+            escolha = input("---> ")
+
+            match escolha:
+                case "1":
+                    cadastrar_filme()
+                case "2":
+                    cadastrar_jogo()
+                case "0":
+                    break
+                case _:
+                    print("Opção inválida!")
+
+        except Exception as e:
+            print(f"Ocorreu um erro inesperado: {e}")
+
+
+def listar_clientes():
+    clientes = locadora.listarClientes()
+    if not clientes:
+        print("Nenhum cliente cadastrado")
+        return
+
+    print("Clientes cadastrados:")
+    for c in clientes:
+        print(f"{c.getNome()} | CPF: {c.getCpf()}")
+
+
+def listar_filmes():
+    filmes = []
+    for item in locadora.listarItens():
+        if isinstance(item, Filme):
+            filmes.append(item)
+
+    if not filmes:
+        print("Nenhum filme cadastrado")
+        return
+
+    print("Filmes cadastrados:")
+    for f in filmes:
+        status = "Disponível" if f.isDisponivel() else "Alugado"
+        print(f"{f.getId()} - {f.getTitulo()} | {f.getGenero()} | {f.getDuracao()} min | {status}")
+
+
+def listar_jogos():
+    jogos = []
+    for item in locadora.listarItens():
+        if isinstance(item, Jogo):
+            jogos.append(item)
+
+    if not jogos:
+        print("Nenhum jogo cadastrado")
+        return
+
+    print("Jogos cadastrados:")
+    for j in jogos:
+        status = "Disponível" if j.isDisponivel() else "Alugado"
+        print(f"{j.getId()} - {j.getTitulo()} | {j.getPlataforma()} | {j.getFaixaEtaria()}+ | {status}")
+
+
+def listar():
+    while True:
+        try:
+            print("1 - Listar Clientes")
+            print("2 - Listar Filmes")
+            print("3 - Listar Jogos")
+            print("0 - Voltar")
+            escolha = input("---> ")
+
+            match escolha:
+                case "1":
+                    listar_clientes()
+                case "2":
+                    listar_filmes()
+                case "3":
+                    listar_jogos()
+                case "0":
+                    break
+                case _:
+                    print("Opção inválida!")
+
+        except Exception as e:
+            print(f"Ocorreu um erro inesperado: {e}")
+```
+## 📝 Funções de Cadastro
+
+### `cadastrar_cliente()`
+- Solicita nome e CPF.
+- Valida o CPF (11 dígitos).
+- Cria objeto `Cliente` e adiciona à locadora.
+
+### `cadastrar_filme()`
+- Solicita título, gênero e duração.
+- Gera ID automaticamente.
+- Cria objeto `Filme` e adiciona à locadora.
+
+### `cadastrar_jogo()`
+- Solicita título, plataforma e faixa etária.
+- Gera ID automaticamente.
+- Cria objeto `Jogo` e adiciona à locadora.
+
+### `cadastrar_filme_jogo()`
+- Menu interativo para escolher cadastrar filme ou jogo.
+- Usa `match/case` para tratar opções do usuário.
+
+---
+
+## 📝 Funções de Listagem
+
+### `listar_clientes()`
+- Lista todos os clientes cadastrados com nome e CPF.
+- Exibe mensagem caso não haja clientes.
+
+### `listar_filmes()`
+- Filtra apenas os objetos `Filme`.
+- Mostra ID, título, gênero, duração e status (Disponível/Alugado).
+
+### `listar_jogos()`
+- Filtra apenas os objetos `Jogo`.
+- Mostra ID, título, plataforma, faixa etária e status.
+
+### `listar()`
+- Menu interativo para listar clientes, filmes ou jogos.
+- Usa `match/case` e `while True` para permitir navegação contínua.
+---
+# App.py
+```python
 ****
 ```
+### Aqui temos o menu que está com as funções feitas em **funcoes.py** e que atribuiram de **classes.py**
+### Utilizando ao invez de if e else, march case, e englobado por try except, melhorando assim, a validação
