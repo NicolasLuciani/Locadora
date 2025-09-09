@@ -1,18 +1,15 @@
-from classes import *
 from funcoes import *
 import os
 
 while True:
     try:
-        os.system("cls")
-        print("Bem-Vindo a locadora")
-        os.system("pause")
-        print("Escolha sua opção:")
-        print("1 - Cadstrar cliente")
-        print("2 - Cadastrar filme ou jogo")
+        os.system("cls" if os.name == "nt" else "clear")
+        print("\n=== Locadora ===")
+        print("1 - Cadastrar Cliente")
+        print("2 - Cadastrar Filme ou Jogo")
         print("3 - Listar")
-        print("0 - sair")
-        escolha = int(input("--->"))
+        print("0 - Sair")
+        escolha = int(input("---> "))
 
         match escolha:
             case 1:
@@ -24,7 +21,9 @@ while True:
             case 0:
                 break
             case _:
-                print("Digite uma opção válida")
-            
+                print("Opção inválida!")
+
+        input("\nPressione Enter para continuar...")
+
     except Exception as e:
-        print(f"Ocorreu um erro ineperado {e}")
+        print(f"Ocorreu um erro inesperado: {e}")

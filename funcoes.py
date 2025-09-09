@@ -1,152 +1,112 @@
 from classes import *
-import os
 
-locadora = locadora()
+locadora = Locadora()
+
 
 def cadastrar_cliente():
-    print("Vamos cadastrar o cliente!")
-    print("")
-    try:
-        nome_cliente = input("Digite o nome\n--->")
-        if nome_cliente == "":
-            ValueError("Digite algo para a validação!")
-
-        cpf = input("Digite o CPF\n--->")
-        if cpf == "":
-            ValueError("Digite o CPF corretamente")
-        
-        if len(cpf) != 11:
-            ValueError("CPF possui exatamente 11 números!")
-
-        cliente = Cliente(nome_cliente, cpf)
-        locadora.cadastrarCliente(cliente)
-        print("Cadastro realizado com sucesso!")
-    
-    except Exception as e:
-        print(f"Ocorreu um erro ineperado {e}")
-
-#-------------------------------------------------------------------------------------------------------
-def cadstrar_filme():
-    print("Vamos cadastrar seu filme")
-    print("")
-    try:
-        titulo = input("Digite o titulo do filme\n--->")
-        if titulo == "":
-            ValueError("Digite algo para a validação")
-
-        genero = input("Digite o gênero do filme\n--->")
-        if genero == "":
-            ValueError("Digite algo para a validação")
-
-        print("Duração do filme:")
-        duracao = input("Digite a duração do filme (ex: 2h23m)\n--->")
-
-        print(f"|Título: {titulo}|Gênero: {genero}|Duração:{duracao}")
-        filme = Filme(titulo, genero, duracao)
-        locadora.cadastrarItens(filme)
-
-    except Exception as e:
-        print(f"Ocorreu um erro ineperado {e}")
+    print("Cadastro de Cliente")
+    nome = input("Nome: ")
+    cpf = input("CPF (11 dígitos): ")
+    if len(cpf) != 11:
+        print("CPF inválido!")
+        return
+    cliente = Cliente(nome, cpf)
+    locadora.cadastrarCliente(cliente)
+    print(f"Cliente {nome} cadastrado com sucesso!")
 
 
-def cadstrar_jogo():
-    print("Vamos cadastrar seu jogo")
-    print("")
-    try:
-        titulo = input("Digite o titulo do jogo\n--->")
-        if titulo == "":
-            ValueError("Digite algo para a validação")
+def cadastrar_filme():
+    print("Cadastro de Filme")
+    id = len(locadora.listarItens()) + 1
+    titulo = input("Título: ")
+    genero = input("Gênero: ")
+    duracao = int(input("Duração (minutos): "))
+    filme = Filme(id, titulo, genero, duracao)
+    locadora.cadastrarItem(filme)
+    print(f"Filme {titulo} cadastrado!")
 
-        plataforma = input("Digite a plataforma do jogo\n--->")
-        if plataforma == "":
-            ValueError("Digite algo para a validação")
 
-        fixaetaria = input("Digite a faixaEtaria do jogo\n--->")
-        if fixaetaria ==  "":
-            ValueError("Digite algo para a validação")
+def cadastrar_jogo():
+    print("Cadastro de Jogo")
+    id = len(locadora.listarItens()) + 1
+    titulo = input("Título: ")
+    plataforma = input("Plataforma: ")
+    faixa = int(input("Faixa etária: "))
+    jogo = Jogo(id, titulo, plataforma, faixa)
+    locadora.cadastrarItem(jogo)
+    print(f"Jogo {titulo} cadastrado!")
 
-        jogo = Jogo(titulo, plataforma, fixaetaria)
-        locadora.cadastrarItens(jogo)
-    
-    except Exception as e:
-        print(f"Ocorreu um erro ineperado {e}")
 
 def cadastrar_filme_jogo():
     while True:
-        try:
-            print("Vamos cadastrar o filme ou um jogo")
-            print("")
-            print("1 - Jogo")
-            print("2 - Filme")
-            print("0 - sair")
-            escolha = input("--->")
-
-            match escolha:
-                case 1:
-                    cadstrar_jogo()
-                case 2:
-                    cadstrar_filme()
-                case 0:
-                    break
-                case _:
-                    print("Número inválido, uma opção válida por favor!")
-            
-        except Exception as e:
-            print(f"Ocorreu um erro ineperado {e}")
+        print("1 - Cadastrar Filme")
+        print("2 - Cadastrar Jogo")
+        print("0 - Voltar")
+        escolha = input("---> ")
+        if escolha == "1":
+            cadastrar_filme()
+        elif escolha == "2":
+            cadastrar_jogo()
+        elif escolha == "0":
+            break
+        else:
+            print("Opção inválida!")
 
 
-#-------------------------------------------------------------------------------------------------------
 def listar_clientes():
-    print("--- CLIENTES ---")
-    print("")
-    if not locadora.listarClientes:
+    clientes = locadora.listarClientes()
+    if not clientes:
         print("Nenhum cliente cadastrado")
+        return
+    print("Clientes cadastrados:")
+    print(f"{clientes.getNome()} | CPF: {clientes.getCpf()}")
 
-    for id, cliente in enumerate(locadora.cliente, start=1):
-        print(f"{id} - Nome: {cliente.nome} | CPF: {cliente.cpf}")
 
-def listar_filme():
-    print("--- FILMES ---")
-    print("")
-    if not locadora.cadastrarItens:
+def listar_filmes():
+    itens = [i for i in locadora.listarItens() if isinstance(i, Filme)]
+    if not itens:
         print("Nenhum filme cadastrado")
-    
-    for id, filme in enumerate(locadora.filme, start=1):
-        print(f"{id} - Nome {filme.nome} | {filme.genero}")
+        return
+    print("Filmes cadastrados:")
+    if itens.isDisponivel():
+        status = "Disponível" 
+    else:
+        "Alugado"
+    print(f"{itens.getId()} - {itens.getTitulo()} | {itens.getGenero()} | {itens.getDuracao()} min | {status}")
 
-def listar_jogo():
-    print("--- JOGOS ---")
-    print("")
-    if not locadora.cadastrarItens:
+
+def listar_jogos():
+    itens = [i for i in locadora.listarItens() if isinstance(i, Jogo)]
+    if not itens:
         print("Nenhum jogo cadastrado")
-    
-    for id, jogo in enumerate(locadora.filme, start=1):
-        print(f"{id} - Nome {jogo.nome} | {jogo.genero}")
+        return
+    print("Jogos cadastrados:")
+    if itens.isDisponivel():
+        status = "Disponível" 
+    else:
+        "Alugado"
+    print(f"{itens.getId()} - {itens.getTitulo()} | {itens.getPlataforma()} | {itens.getFaixaEtaria()}+ | {status}")
+
 
 def listar():
     while True:
         try:
-            print("Vamos para a listagem")
-            print("")
-            print("1 - Listar clientes")
-            print("2 - Listar filmes")
-            print("3 - Listar jogos")
-            print("0 - sair")
-            escolha = int(input("--->"))
-
+            print("1 - Listar Clientes")
+            print("2 - Listar Filmes")
+            print("3 - Listar Jogos")
+            print("0 - Voltar")
+            escolha = input("---> ")
             match escolha:
                 case 1:
                     listar_clientes()
                 case 2:
-                    listar_filme()
+                    listar_filmes()
                 case 3:
-                    listar_jogo()
+                    listar_jogos()
                 case 0:
                     break
                 case _:
-                    print("Digite uma opção válida!")
-        
+                    print("Opção inválida!")
+
         except Exception as e:
-            print(f"Ocorreu um erro ineperado {e}")
-
-
+            print(f"Ocorreu um erro inesperado: {e}")
