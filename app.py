@@ -1,9 +1,7 @@
 from funcoes import *
-import os
 
 while True:
     try:
-        os.system("cls" if os.name == "nt" else "clear")
         print("\n=== Locadora ===")
         print("1 - Cadastrar Cliente")
         print("2 - Cadastrar Filme ou Jogo")
