@@ -233,18 +233,15 @@ def cadastrar_cliente():
         print("Cadastro de Cliente")
         nome = input("Nome: ")
         cpf = input("CPF (11 dígitos): ")
-
         if len(cpf) != 11:
             print("CPF inválido!")
             return
-
         cliente = Cliente(nome, cpf)
         locadora.cadastrarCliente(cliente)
         print(f"Cliente {nome} cadastrado com sucesso!")
-
+        
     except Exception as e:
         print(f"Ocorreu um erro inesperado: {e}")
-
 
 def cadastrar_filme():
     try:
@@ -253,11 +250,10 @@ def cadastrar_filme():
         titulo = input("Título: ")
         genero = input("Gênero: ")
         duracao = int(input("Duração (minutos): "))
-
         filme = Filme(id, titulo, genero, duracao)
         locadora.cadastrarItem(filme)
         print(f"Filme {titulo} cadastrado!")
-
+        
     except Exception as e:
         print(f"Ocorreu um erro inesperado: {e}")
 
@@ -269,7 +265,6 @@ def cadastrar_jogo():
         titulo = input("Título: ")
         plataforma = input("Plataforma: ")
         faixa = int(input("Faixa etária: "))
-
         jogo = Jogo(id, titulo, plataforma, faixa)
         locadora.cadastrarItem(jogo)
         print(f"Jogo {titulo} cadastrado!")
@@ -279,13 +274,12 @@ def cadastrar_jogo():
 
 
 def cadastrar_filme_jogo():
-    while True:
-        try:
+    try:
+        while True:
             print("1 - Cadastrar Filme")
             print("2 - Cadastrar Jogo")
             print("0 - Voltar")
             escolha = input("---> ")
-
             match escolha:
                 case "1":
                     cadastrar_filme()
@@ -296,51 +290,52 @@ def cadastrar_filme_jogo():
                 case _:
                     print("Opção inválida!")
 
-        except Exception as e:
-            print(f"Ocorreu um erro inesperado: {e}")
+    except Exception as e:
+        print(f"Ocorreu um erro inesperado: {e}")
 
 
 def listar_clientes():
-    clientes = locadora.listarClientes()
-    if not clientes:
-        print("Nenhum cliente cadastrado")
-        return
+    try:
+        clientes = locadora.listarClientes()
+        if not clientes:
+            print("Nenhum cliente cadastrado")
+            return
+        print("Clientes cadastrados:")
+        print(f"{clientes.getNome()} | CPF: {clientes.getCpf()}")
 
-    print("Clientes cadastrados:")
-    for c in clientes:
-        print(f"{c.getNome()} | CPF: {c.getCpf()}")
-
+    except Exception as e:
+        print(f"Ocorreu um erro inesperado: {e}")
 
 def listar_filmes():
-    filmes = []
-    for item in locadora.listarItens():
-        if isinstance(item, Filme):
-            filmes.append(item)
+    try:
+        if not itens:
+            print("Nenhum filme cadastrado")
+            return
+        print("Filmes cadastrados:")
+        if itens.isDisponivel():
+            status = "Disponível" 
+        else:
+            "Alugado"
+        print(f"{itens.getId()} - {itens.getTitulo()} | {itens.getGenero()} | {itens.getDuracao()} min | {status}")
 
-    if not filmes:
-        print("Nenhum filme cadastrado")
-        return
-
-    print("Filmes cadastrados:")
-    for f in filmes:
-        status = "Disponível" if f.isDisponivel() else "Alugado"
-        print(f"{f.getId()} - {f.getTitulo()} | {f.getGenero()} | {f.getDuracao()} min | {status}")
+    except Exception as e:
+        print(f"Ocorreu um erro inesperado: {e}")
 
 
 def listar_jogos():
-    jogos = []
-    for item in locadora.listarItens():
-        if isinstance(item, Jogo):
-            jogos.append(item)
+    try:
+        if not itens:
+            print("Nenhum jogo cadastrado")
+            return
+        print("Jogos cadastrados:")
+        if itens.isDisponivel():
+            status = "Disponível" 
+        else:
+            "Alugado"
+        print(f"{itens.getId()} - {itens.getTitulo()} | {itens.getPlataforma()} | {itens.getFaixaEtaria()}+ | {status}")
 
-    if not jogos:
-        print("Nenhum jogo cadastrado")
-        return
-
-    print("Jogos cadastrados:")
-    for j in jogos:
-        status = "Disponível" if j.isDisponivel() else "Alugado"
-        print(f"{j.getId()} - {j.getTitulo()} | {j.getPlataforma()} | {j.getFaixaEtaria()}+ | {status}")
+    except Exception as e:
+            print(f"Ocorreu um erro inesperado: {e}")
 
 
 def listar():
@@ -350,16 +345,15 @@ def listar():
             print("2 - Listar Filmes")
             print("3 - Listar Jogos")
             print("0 - Voltar")
-            escolha = input("---> ")
-
+            escolha = int(input("---> "))
             match escolha:
-                case "1":
+                case 1:
                     listar_clientes()
-                case "2":
+                case 2:
                     listar_filmes()
-                case "3":
+                case 3:
                     listar_jogos()
-                case "0":
+                case 0:
                     break
                 case _:
                     print("Opção inválida!")
