@@ -91,6 +91,9 @@ def listar_filmes():
             print("---------------------------------------------------------------------\n")
             filme = True
 
+        if not filme:
+            print("Nenhum filme cadastardo")
+
     except Exception as e:
         print(f"Houve um erro {e} :(")
 #------------------------------------------------------------------------------------------#
@@ -114,6 +117,9 @@ def listar_jogos():
             print(f"{item.getId()} - Jogo: {item.getTitulo()} | Plataforma: {item.getPlataforma()} | Faixa Etária: {item.getFaixaEtaria()}+ | {status}")
             print("---------------------------------------------------------------------\n")
             jogos_existem = True
+    
+        if not jogos_existem:
+            print("Nenhum jogo cadastardo")
 
     except Exception as e:
         print(f"Houve um erro {e} :(")
