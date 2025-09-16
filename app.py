@@ -12,6 +12,7 @@ while escolha != 0:
         print("3 - Cadastrar jogos")
         print("4 - Listar clientes")
         print("5 - Listar itens (filme ou jogo)")
+        print("6 - alocar item")
         print("0 - sair")
         escolha = input("---> ")
         match escolha:
@@ -25,6 +26,8 @@ while escolha != 0:
                 listar_clientes()
             case "5":
                 listar_itens()
+            case "6":
+                alocar_item()
             case "0":
                 break
             case _:
@@ -32,4 +35,4 @@ while escolha != 0:
         
 
     except Exception as e:
-        print("Houve um erro {e} :(")
+        print(f"Houve um erro {e} :(")

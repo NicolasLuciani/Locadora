@@ -149,3 +149,38 @@ def listar_itens():
 
         except Exception as e:
             print(f"Houve um erro {e} :(")
+#----------------------------------------------------------------------------------------------
+# Alocar item
+def alocar_item():
+    while alocar != True:
+        try:
+            nome_cliente = input("Digite o nome do cliente: ")
+            alocar = False
+            cliente = None
+            for c in locadora.listarClientes():
+                if c.getNome() == nome_cliente:
+                    break
+            if not cliente:
+                print("Cliente não encontrado!")
+                return
+
+            print("Itens disponíveis:")
+            listar_itens()
+
+            titulo_item = input("Digite o título do item que deseja alugar: ")
+            item_escolhido = None
+            for item in locadora.listarItens():
+                if item.getTitulo() == titulo_item and item.isDisponivel():
+                    item_escolhido = item
+                    break
+
+            if not item_escolhido:
+                print("Item não disponível!")
+                return
+
+            cliente.locar(item_escolhido)
+            print(f"{item_escolhido.getTitulo()} alugado para {cliente.getNome()}!")
+            alocar = True
+
+        except Exception as e:
+            print(f"Houve um erro {e} :(")
