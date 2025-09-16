@@ -34,12 +34,6 @@ class Filme(Item):
         super().__init__(id, titulo)
         self.__genero = genero
         self.__duracao = duracao
-    
-    def getId(self):
-        return self.__id
-    
-    def getTitulo(self):
-        return self.__titulo
 
     def getGenero(self):
         return self.__genero
