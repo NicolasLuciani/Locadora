@@ -22,7 +22,7 @@ class Item:
     def getTitulo(self):
         return self.__titulo
 
-    def isDisponivel(self):
+    def getDisponivel(self):
         return self.__disponivel
 
     def setTitulo(self, titulo):
@@ -41,7 +41,7 @@ class Filme(Item):
     def getDuracao(self):
         return self.__duracao
 
-    def setGenero(self, genero: str):
+    def setGenero(self, genero):
         self.__genero = genero
 
 
@@ -56,9 +56,6 @@ class Jogo(Item):
 
     def getFaixaEtaria(self):
         return self.__faixaEtaria
-    
-    def setPlataforma(self, plataforma: str):
-        self.__plataforma = plataforma
 
 
 class Cliente:

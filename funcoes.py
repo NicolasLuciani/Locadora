@@ -81,7 +81,7 @@ def listar_filmes():
             return
         
         for item in itens:
-            if item.isDisponivel():
+            if item.getDisponivel():
                 status = "Disponível"
             
             else:
@@ -109,7 +109,7 @@ def listar_jogos():
             return
 
         for item in itens:
-            if item.isDisponivel():
+            if item.getDisponivel():
                 status = "Disponível"
             else:
                 status = "Alugado"
@@ -150,37 +150,92 @@ def listar_itens():
         except Exception as e:
             print(f"Houve um erro {e} :(")
 #----------------------------------------------------------------------------------------------
+# alugar filme
+def alugar_filme():
+    titulo = input("Nome do filme: ")
+    for item in locadora.listarItens():
+        if item.getTitulo() == titulo:
+            if item.alugar():
+                print(f"Filme '{item.getTitulo()}' alugado com sucesso!")
+                return
+    print("Filme não encontrado.")
+#----------------------------------------------------------------------------------------------
+# alugar jogo
+def alugar_jogo():
+    titulo = input("Nome do jogo: ")
+    for item in locadora.listarItens():
+        if item.getTitulo() == titulo:
+            if item.alugar():
+                print(f"Jogo '{item.getTitulo()}' alugado com sucesso!")
+                return
+    print("Jogo não encontrado.")
+#----------------------------------------------------------------------------------------------
 # Alocar item
-def alocar_item():
-    while alocar != True:
+def alugar_item():
+    alugar = False
+    while alugar != True:
         try:
-            nome_cliente = input("Digite o nome do cliente: ")
-            alocar = False
-            cliente = None
-            for c in locadora.listarClientes():
-                if c.getNome() == nome_cliente:
+            print("=== ALUGAR FILME/JOGO ===")
+            print("")
+            print("1 - Filme")
+            print("2 - Jogo")
+            print("0 - sair")
+            escolha = input("--->")
+            match escolha:
+                case "1":
+                    alugar_filme()
+                case "2":
+                    alugar_jogo()
+                case "0":
                     break
-            if not cliente:
-                print("Cliente não encontrado!")
+                case _:
+                    print("Número inválido") 
+
+
+        except Exception as e:
+            print(f"Houve um erro {e} :(")
+#----------------------------------------------------------------------------------------------
+# devolver filme
+def devolver_filme():
+    titulo = input("Nome do filme: ")
+    for item in locadora.listarItens():
+        if item.getTitulo() == titulo:
+            if item.devolver():
+                print(f"Filme '{item.getTitulo()}' devolvido com sucesso!")
                 return
-
-            print("Itens disponíveis:")
-            listar_itens()
-
-            titulo_item = input("Digite o título do item que deseja alugar: ")
-            item_escolhido = None
-            for item in locadora.listarItens():
-                if item.getTitulo() == titulo_item and item.isDisponivel():
-                    item_escolhido = item
+    print("Filme não encontrado.")
+#----------------------------------------------------------------------------------------------
+# devolver jogo
+def devolver_jogo():
+    titulo = input("Nome do jogo: ")
+    for item in locadora.listarItens():
+        if item.getTitulo() == titulo:
+            if item.devolver():
+                print(f"Jogo '{item.getTitulo()}' devolvido com sucesso!")
+                return
+    print("Jogo não encontrado.")
+#--------------------------------------------------------------------------------------------
+# devolver item (filme ou jogo)
+def devolver_item():
+    devolver = False
+    while devolver != True:
+        try:
+            print("=== DEVOLVER FILME/JOGO ===")
+            print("")
+            print("1 - Filme")
+            print("2 - Jogo")
+            print("0 - sair")
+            escolha = input("--->")
+            match escolha:
+                case "1":
+                    devolver_filme()
+                case "2":
+                    devolver_jogo()
+                case "0":
                     break
+                case _:
+                    print("Número inválido") 
 
-            if not item_escolhido:
-                print("Item não disponível!")
-                return
-
-            cliente.locar(item_escolhido)
-            print(f"{item_escolhido.getTitulo()} alugado para {cliente.getNome()}!")
-            alocar = True
 
         except Exception as e:
             print(f"Houve um erro {e} :(")
