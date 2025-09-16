@@ -1,6 +1,6 @@
 # 🎬 Sistema de Locadora
 
-### Um sistema simples de locadora de filmes e jogos, desenvolvido em Python para praticar Programação Orientada a Objetos (POO).
+### Um sistema simples de locadora de filmes e jogos.
 
 ---
 
