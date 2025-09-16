@@ -73,17 +73,18 @@ class Cliente:
     def getItensLocados(self):
         return self.__itensLocados
 
-    def locar(self, item: Item):
-        if item.alugar():
-            self.__itensLocados.append(item)
-            return True
-        return False
+def locar(self, item: Item):
+    if item.alugar():
+        self.__itensLocados.append(item)
+        return True
+    return False
 
-    def devolver(self, item: Item):
-        if item in self.__itensLocados and item.devolver():
+def devolver(self, item: Item):
+    if item in self.__itensLocados:
+        if item.devolver():
             self.__itensLocados.remove(item)
             return True
-        return False
+    return False
 
 
 class Locadora:
