@@ -9,11 +9,15 @@ def cadastrar_clientes():
         print("=== CADASTRO DE CLIENTES ===")
         nome = input("Nome: ")
         cpf = input("CPF: ")
-        if len(cpf) != 11:
-            print("O CPF possui apenas 11 dígitos")
+        while True:
+            cpf = input("CPF: ")
+            if len(cpf) != 11:
+                print("O CPF deve ter exatamente 11 dígitos!")
+            else:
+                break 
         cliente = Cliente(nome, cpf)
         locadora.cadastrarCliente(cliente)
-        print(f"Cliente {nome} cadastrado com sucesso!")
+        print(f"Cliente {nome} cadastrado com sucesso!\n")
 
     except Exception as e:
         print(f"Houve um erro {e} :(")
@@ -28,7 +32,7 @@ def cadastar_filmes():
         duracao = input("Duração do filme (ex: 2h 23m):")
         filme = Filme(id, titulo, genero, duracao)
         locadora.cadastrarItem(filme)
-        print(f"Filme {titulo} cadastrado com sucesso!")
+        print(f"Filme {titulo} cadastrado com sucesso!\n")
 
     except Exception as e:
         print(f"Houve um erro {e} :(")
@@ -43,7 +47,7 @@ def cadastrar_jogo():
         faixaEtaria = input("FaixaEtaria: ")
         jogo = Jogo(id, titulo, plataforma, faixaEtaria)
         locadora.cadastrarItem(jogo)
-        print(f"Jogo {titulo} cadsatrado com sucesso!")
+        print(f"Jogo {titulo} cadsatrado com sucesso!\n")
 
     except Exception as e:
         print(f"Houve um erro {e} :(")
@@ -51,7 +55,7 @@ def cadastrar_jogo():
 # listar_clientes
 def listar_clientes():
     try:
-        print("=== LISTA DE CLIENTES ===")
+        print("=== LISTA DE CLIENTES ===\n")
         clientes = locadora.listarClientes()
 
         if not clientes:
@@ -59,6 +63,7 @@ def listar_clientes():
         
         for cliente in clientes:
             print(f"Nome: {cliente.getNome()}| CPF: {cliente.getCpf()}")
+            print("-------------------------------------------------------\n")
 
     except Exception as e:
         print(f"Houve um erro {e} :(")
@@ -66,9 +71,10 @@ def listar_clientes():
 # listar_filmes
 def listar_filmes():
     try:
-        print("=== LISTA DE FILMES ===")
+        print("=== LISTA DE FILMES ===\n")
         itens = locadora.listarItens()
-        filmes = False
+        filme = False
+        
 
         if not itens:
             print("Não há nenhum filme cadastrado!")
@@ -82,7 +88,11 @@ def listar_filmes():
                 status = "Alugado"
             
             print(f"{item.getId()} - Filme: {item.getTitulo()}| Gênero: {item.getGenero()}| Duração: {item.getDuracao()}min| {status}")
-            filmes = True
+            print("---------------------------------------------------------------------\n")
+            filme = True
+        
+        if not filme:
+            print("Não há nenhum jogo cadastrado!")
 
     except Exception as e:
         print(f"Houve um erro {e} :(")
@@ -90,7 +100,7 @@ def listar_filmes():
 # listar_jogos
 def listar_jogos():
     try:
-        print("=== LISTA DE JOGOS ===")
+        print("=== LISTA DE JOGOS ===\n")
         itens = locadora.listarItens()
         jogos_existem = False
 
@@ -99,16 +109,14 @@ def listar_jogos():
             return
 
         for item in itens:
-            try:
-                if item.isDisponivel():
-                    status = "Disponível"
-                else:
-                    status = "Alugado"
+            if item.isDisponivel():
+                status = "Disponível"
+            else:
+                status = "Alugado"
 
-                print(f"{item.getId()} - Jogo: {item.getTitulo()} | Plataforma: {item.getPlataforma()} | Faixa Etária: {item.getFaixaEtaria()}+ | {status}")
-                jogos_existem = True
-            except AttributeError:
-                continue  
+            print(f"{item.getId()} - Jogo: {item.getTitulo()} | Plataforma: {item.getPlataforma()} | Faixa Etária: {item.getFaixaEtaria()}+ | {status}")
+            print("---------------------------------------------------------------------\n")
+            jogos_existem = True
 
         if not jogos_existem:
             print("Não há nenhum jogo cadastrado!")
@@ -121,7 +129,7 @@ def listar_itens():
     escolha = 1
     while escolha != 0:
         try:
-            print("=== LISTAGEM ===")
+            print("=== LISTAGEM ===\n")
             print("")
             print("1 - Listar filmes")
             print("2 - Listar jogos")
